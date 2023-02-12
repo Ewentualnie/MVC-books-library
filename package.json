@@ -1,0 +1,19 @@
+{
+  "name": "mvc-books-library",
+  "version": "1.0.0",
+  "description": "school library",
+  "main": "index.js",
+  "scripts": {
+    "test": "rm -rf /dist && tsc && node ./dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ewentualnie/MVC-books-library.git"
+  },
+  "author": "Omni",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ewentualnie/MVC-books-library/issues"
+  },
+  "homepage": "https://github.com/Ewentualnie/MVC-books-library#readme"
+}
