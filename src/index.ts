@@ -1,7 +1,8 @@
 import express from 'express';
 import morgan from 'morgan';
 import path from 'path'
-import router from "./routers/router";
+import booksRouter from "./routers/books-router";
+import adminRouter from "./routers/admin-router"
 
 const app = express();
 const source = path.resolve(__dirname, '../source')
@@ -13,6 +14,7 @@ app.set('views', source)
 app.use(express.static(source))
 app.use(express.json())
 app.use(morgan('common'));
-app.use(router)
+app.use(booksRouter)
+app.use("/admin", adminRouter)
 
 app.listen(port, () => console.log("app listen on port " + port))
