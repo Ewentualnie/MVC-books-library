@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 
 <head>
-    <%- include('./parts/head') %>
+    <%- include('./parts/head', { title: "SHPP library main page"}) %>
 </head>
 
 <body data-gr-c-s-loaded="true" class="">
-<%- include('./parts/header') %>
+<%- include('./parts/header', {admin:"<a href='http://localhost:3000/admin'><span class='fa-stack fa-sm'>Admin</span></a>"}) %>
 <section id="main" class="main-wrapper">
     <div class="container">
         <div id="content" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <% books.forEach(book=> { %>
-                <%- include('./parts/bookPreview', {id: book.id, title: book.title, author: book.author}) %>
+            <% books.forEach(book => { %>
+                <%- include('./parts/bookPreview', {id: book.id, preview: book.preview, title: book.title, author: book.author}) %>
             <% }); %>
         </div>
     </div>
