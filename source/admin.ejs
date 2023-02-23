@@ -10,16 +10,86 @@
 <section id="main" class="main-wrapper">
     <div class="container">
         <div id="content" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div style="text-align: center;">
-                тут буде панель адміна!
+            <div style="display: flex;justify-content: space-between; font-size: 20px">
+                <div class="title">Бібліотека Ш++</div>
+                <div class="title"><a href="">Log out</a></div>
+            </div>
+            <div style="display: flex;justify-content: space-evenly; margin-top: 20px">
+                <div class="main-menu" style="border: solid 1px #4ebd1f; border-radius: 5px; width:60%">
+                    <table id="table">
+                        <thead>
+                        <tr class="row" style="margin: 10px">
+                            <th style="text-align: center; width:5%">ID</th>
+                            <th style="text-align: center; width:50%">Назва книги</th>
+                            <th style="text-align: center; width:20%">Автори</th>
+                            <th style="text-align: center; width:5%">Рік</th>
+                            <th style="text-align: center; width:15%">Дія</th>
+                            <th style="text-align: center; width:5%">Кліків</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% if(books.length) { %>
+                            <% books.forEach((book)=> { %>
+                                <tr class="row">
+                                    <td style="text-align: center;"><%= book.id %></td>
+                                    <td style="text-align: center;"><%= book.name %></td>
+                                    <td style="text-align: center;"><%= book.authors %></td>
+                                    <td style="text-align: center;"><%= book.year %></td>
+                                    <td style="text-align: center;">
+                                        <a href="#" onclick="deleteBook('<%= book.id %>')">Видалити</a>
+                                    </td>
+                                    <td style="text-align: center;"><%= book.clickCount %></td>
+                                </tr>
+                            <% }) %>
+                        <% } %>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="main-menu" style="border: solid 1px #4ebd1f; border-radius: 5px; width:35%">
+                    <form id="add-book" method="POST" action="http://localhost:3000/admin/api/v1">
+                        <div class="row" style="margin: 10px 3px 0 5px">
+                            <div class="col-xs-6">
+                                <input name="name" type="text" class="form-control" placeholder="Назва книги">
+                            </div>
+                            <div class="col-xs-6">
+                                <input name="author1" type="text" class="form-control" placeholder="Автор книги">
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row" style="margin: 10px 3px 0 5px">
+                            <div class="col-xs-6">
+                                <input name="year" type="text" class="form-control" placeholder="Рік видання">
+                            </div>
+                            <div class="col-xs-6">
+                                <input name="author2" type="text" class="form-control" placeholder="Автор книги">
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row" style="margin: 10px 3px 0 5px">
+                            <div class="col-xs-6">
+                                <input name="preview" type="file" class="form-control" placeholder="Книга">
+                            </div>
+                            <div class="col-xs-6">
+                                <input name="author3" type="text" class="form-control" placeholder="Автор книги">
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row" style="margin: 10px 3px 10px 5px">
+                            <div class="col-xs-6">
+                                <div style="flex: content; text-align: center;">
+                                    <input type="submit" value="Додати книгу">
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <textarea name="description" class="form-control" placeholder="Опис книги"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-
-
-
 </section>
 <%- include('./parts/footer') %>
 </body>
-
 </html>
