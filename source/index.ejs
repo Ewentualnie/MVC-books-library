@@ -10,9 +10,11 @@
 <section id="main" class="main-wrapper">
     <div class="container">
         <div id="content" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <% books.forEach(book => { %>
-                <%- include('./parts/bookPreview', {id: book.id, preview: book.preview, title: book.title, author: book.author}) %>
-            <% }); %>
+            <% if(books.length) { %>
+                <% books.forEach(book => { %>
+                    <%- include('./parts/bookPreview', {book:book}) %>
+                <% }); %>
+            <% } %>
         </div>
     </div>
 
