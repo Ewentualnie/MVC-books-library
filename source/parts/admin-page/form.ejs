@@ -1,0 +1,41 @@
+<div class="main-menu" style="border: solid 1px #4ebd1f; border-radius: 5px; width:35%">
+    <form id="add-book" method="POST" action="http://localhost:3000/admin/api/v1">
+        <div class="row" style="margin: 10px 3px 0 5px">
+            <div class="col-xs-6">
+                <input name="name" type="text" class="form-control" placeholder="Назва книги">
+            </div>
+            <div class="col-xs-6">
+                <input name="author1" type="text" class="form-control" placeholder="Автор книги">
+            </div>
+        </div>
+        <br/>
+        <div class="row" style="margin: 10px 3px 0 5px">
+            <div class="col-xs-6">
+                <input name="year" type="text" class="form-control" placeholder="Рік видання">
+            </div>
+            <div class="col-xs-6">
+                <input name="author2" type="text" class="form-control" placeholder="Автор книги">
+            </div>
+        </div>
+        <br/>
+        <div class="row" style="margin: 10px 3px 0 5px">
+            <div class="col-xs-6">
+                <input name="preview" type="file" class="form-control" placeholder="Книга">
+            </div>
+            <div class="col-xs-6">
+                <input name="author3" type="text" class="form-control" placeholder="Автор книги">
+            </div>
+        </div>
+        <br/>
+        <div class="row" style="margin: 10px 3px 10px 5px">
+            <div class="col-xs-6">
+                <div style="flex: content; text-align: center;">
+                    <input onclick="submitForm(event)" type="submit" value="Додати книгу">
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <textarea name="description" class="form-control" placeholder="Опис книги"></textarea>
+            </div>
+        </div>
+    </form>
+</div>

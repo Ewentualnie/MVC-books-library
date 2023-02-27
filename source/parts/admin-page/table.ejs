@@ -1,0 +1,30 @@
+<div class="main-menu" style="border: solid 1px #4ebd1f; border-radius: 5px; width:60%">
+    <table id="table">
+        <thead>
+        <tr class="row" style="margin: 10px">
+            <th style="text-align: center; width:5%">ID</th>
+            <th style="text-align: center; width:50%">Назва книги</th>
+            <th style="text-align: center; width:20%">Автори</th>
+            <th style="text-align: center; width:5%">Рік</th>
+            <th style="text-align: center; width:15%">Дія</th>
+            <th style="text-align: center; width:5%">Кліків</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if(books.length) { %>
+            <% books.forEach((book)=> { %>
+                <tr class="row">
+                    <td style="text-align: center;"><%= book.id %></td>
+                    <td style="text-align: center;"><%= book.name %></td>
+                    <td style="text-align: center;"><%= book.authors %></td>
+                    <td style="text-align: center;"><%= book.year %></td>
+                    <td style="text-align: center;">
+                        <a href="#" onclick="deleteBook('<%= book.id %>')">Видалити</a>
+                    </td>
+                    <td style="text-align: center;"><%= book.clickCount %></td>
+                </tr>
+            <% }) %>
+        <% } %>
+        </tbody>
+    </table>
+</div>
