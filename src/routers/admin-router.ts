@@ -1,4 +1,5 @@
 import express, {Request, Response} from "express";
+import * as fs from "fs";
 
 const adminRouter = express.Router();
 
@@ -16,9 +17,12 @@ adminRouter.get('/', (req: Request, res: Response) => {
         ]
     })
 }).post('/api/v1', (req: Request, res: Response) => {
-
+    res.end();
 }).delete('/api/v1', (req: Request, res: Response) => {
 
+})
+adminRouter.get('/front', (req: Request, res: Response) => {
+    fs.readFile('./dist/front/admin.js', 'utf-8', (err, data) => res.send(data))
 })
 
 export default adminRouter;
