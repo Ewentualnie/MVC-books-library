@@ -17,7 +17,8 @@ adminRouter.get('/', (req: Request, res: Response) => {
         ]
     })
 }).post('/api/v1', (req: Request, res: Response) => {
-    res.end();
+    console.log(req.body)
+    res.redirect('..')
 }).delete('/api/v1', (req: Request, res: Response) => {
 
 })
