@@ -1,9 +1,7 @@
-function submitForm(e: any) {
-    const form: HTMLFormElement = <HTMLFormElement>document.getElementById('add-book')
-    let FORM: FormData;
-    if (form) {
-        FORM = new FormData(form)
-        console.log(form)
-        console.log(FORM)
+import {FormDataBook} from "../models/types";
+
+function validateBook(dataBook: FormDataBook, e: Event) {
+    if (!dataBook.name.value || isNaN(+dataBook.year.value) || +dataBook.year.value == 0) {
+        e.preventDefault();
     }
 }
