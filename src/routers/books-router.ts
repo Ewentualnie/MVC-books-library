@@ -1,12 +1,8 @@
-import express, {Request, Response} from "express";
-import {getAll} from '../controllers/mysql-controller'
+import express from "express";
+import {getAll, getBook} from '../controllers/mysql-controller'
 
 const booksRouter = express.Router();
 
-
-booksRouter.get('/', async (req: Request, res: Response) => {
-    res.render('index', {
-        books: await getAll()
-    })
-})
+booksRouter.get('/', getAll)
+booksRouter.get('/book/:id', getBook)
 export default booksRouter;
