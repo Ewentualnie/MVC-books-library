@@ -1,13 +1,9 @@
-import mysql from "mysql2";
+import {Request, Response} from "express";
+import database from "../utils/db-connection";
+import {queryAll, queryBook} from "../utils/db-queries";
 
-const database = mysql.createPool({
-    user: 'admin',
-    password: 'root',
-    database: 'library'
-}).promise();
+export const getAll = async (req: Request, res: Response) =>
+    res.render('index', {books: (await database.query(queryAll))[0]})
 
-const queryAll = 'SELECT * FROM books;'
-
-export async function getAll() {
-    return (await database.query(queryAll))[0];
-}
+export const getBook = async (req: Request, res: Response) =>
+    res.render('book', {book: (await database.query(queryBook + +req.params.id))[0][0]})
