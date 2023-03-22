@@ -8,9 +8,9 @@ export interface FormDataBook extends FormData {
     description: HTMLInputElement,
 }
 
-export type NewBook = {
+export type Book = {
     year: number;
     name: string;
     description: string;
-    authors: string[]
+    authors: [string]
 }
