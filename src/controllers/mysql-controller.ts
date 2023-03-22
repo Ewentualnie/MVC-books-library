@@ -1,9 +1,23 @@
 import {Request, Response} from "express";
-import database from "../utils/db-connection";
-import {queryAll, queryBook} from "../utils/db-queries";
+import {findAll, findById, findByLimitAndCounter} from "../services/mysql-service";
+import {Book} from "../models/types";
 
-export const getAll = async (req: Request, res: Response) =>
-    res.render('index', {books: (await database.query(queryAll))[0]})
+export async function getAll(req: Request, res: Response) {
+    const limit: number = +(process.env.limit || 5);
+    const counter: number = +(req.query.counter || 0);
+    const length: number = (await findAll()).length;
+    const books: [Book] = await findByLimitAndCounter(limit, counter)
+    res.render('index', {
+        books,
+        prev: counter >= limit,
+        next: counter < length - limit,
+        counter,
+        limit
+    })
+}
 
-export const getBook = async (req: Request, res: Response) =>
-    res.render('book', {book: (await database.query(queryBook + +req.params.id))[0][0]})
+export async function getBook(req: Request, res: Response) {
+    res.render('book', {
+        book: await findById(+req.params.id)
+    })
+}
