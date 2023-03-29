@@ -1,18 +1,14 @@
-const tableName: string = process.env.tableNmame || 'books'
-
-export function queryAll() {
-    return `SELECT *
-            FROM ${tableName};`
+enum query {
+    getAll = `SELECT *
+              FROM books;`,
+    getBook = `SELECT *
+               FROM books
+               WHERE ID = ?`,
+    getWithLimit = `SELECT *
+                    FROM books
+                    LIMIT ?, ?;`,
+    addBook = `INSERT INTO books (name, year, author, description, preview, title)
+               VALUES (?, ?, ?, ?, ?, ?);`
 }
 
-export function queryBook(id: number) {
-    return `SELECT *
-            FROM ${tableName}
-            WHERE ID = ${id}`
-}
-
-export function queryWithLimit(limit: number, position: number) {
-    return `SELECT *
-            FROM ${tableName}
-            LIMIT ${position}, ${limit}`
-}
+export default query;
