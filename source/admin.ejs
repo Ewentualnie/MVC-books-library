@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <%- include('./parts/head', { title: "SHPP library admin page"}) %>
-</head>
+<%- include('./parts/head', { title: "SHPP library admin page"}) %>
 
 <body data-gr-c-s-loaded="true" class="">
 <%- include('./parts/header', {admin:""}) %>
@@ -14,10 +12,11 @@
                 <div class="title">Бібліотека Ш++</div>
                 <div class="title"><a href="">Log out</a></div>
             </div>
-            <div style="display: flex;justify-content: space-evenly; margin-top: 20px">
+            <div style="display: flex; justify-content: space-evenly; margin-top: 20px; font-size: 14px">
                 <%- include('./parts/admin-page/table', {books:books}) %>
                 <%- include('./parts/admin-page/form') %>
             </div>
+            <%- include('./parts/admin-page/pagination') %>
         </div>
     </div>
 </section>
