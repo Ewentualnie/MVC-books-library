@@ -1,15 +1,26 @@
 import database from "../utils/db-connection";
-import {queryAll, queryBook, queryWithLimit} from "../utils/db-queries";
+import query from "../utils/db-queries";
 import {Book} from "../models/types";
 
 export async function findAll(): Promise<[Book]> {
-    return (await database.query(queryAll()))[0]
+    return (await database.query(query.getAll))[0]
 }
 
 export async function findByLimitAndCounter(limit: number, counter: number): Promise<[Book]> {
-    return (await database.query(queryWithLimit(limit, counter)))[0]
+    return (await database.query(query.getWithLimit, [counter, limit]))[0]
 }
 
 export async function findById(id: number): Promise<Book> {
-    return (await database.query(queryBook(id)))[0][0]
+    return (await database.query(query.getBook, [id]))[0][0]
+}
+
+export async function save(book: Book) {
+    try {
+        return await database.query(
+            query.addBook,
+            [book.name, book.year, book.author, book.description, book.preview, book.title]
+        )
+    } catch (e) {
+        console.log(e)
+    }
 }
