@@ -11,7 +11,6 @@ export async function getAll(req: Request, res: Response) {
     const length: number = (await findAll()).length;
     const pageCount: number = Math.ceil(length / limit);
     const buttonCount: number = 5;
-    console.log(req.query)
     const books: [Book] = await findByLimitAndCounter(limit, page * limit)
 
     res.render('admin', {
