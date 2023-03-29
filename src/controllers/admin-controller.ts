@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import fs from "fs";
-import {findAll, findByLimitAndCounter} from "../services/mysql-service";
+import {findByLimitAndCounter, findLength} from "../services/mysql-service";
 import {Book} from "../models/types";
 import {IncomingForm} from "formidable";
 
@@ -8,11 +8,10 @@ export async function getAll(req: Request, res: Response) {
     const middlePage: number = 2;
     const limit: number = +(process.env.adminLimit || 5);
     const page: number = +(req.query.page || 0);
-    const length: number = (await findAll()).length;
+    const length: number = await findLength();
     const pageCount: number = Math.ceil(length / limit);
     const buttonCount: number = 5;
     const books: [Book] = await findByLimitAndCounter(limit, page * limit)
-
     res.render('admin', {
         books,
         pageCount,

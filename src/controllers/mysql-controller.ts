@@ -1,11 +1,11 @@
 import {Request, Response} from "express";
-import {findAll, findById, findByLimitAndCounter} from "../services/mysql-service";
+import {findById, findByLimitAndCounter, findLength} from "../services/mysql-service";
 import {Book} from "../models/types";
 
 export async function getAll(req: Request, res: Response) {
     const limit: number = +(process.env.limit || 12);
     const counter: number = +(req.query.counter || 0);
-    const length: number = (await findAll()).length;
+    const length: number = await findLength();
     const books: [Book] = await findByLimitAndCounter(limit, counter)
     res.render('index', {
         books,

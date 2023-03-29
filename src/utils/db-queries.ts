@@ -1,4 +1,6 @@
 enum query {
+    getLength = `SELECT COUNT(*)
+                 FROM books`,
     getAll = `SELECT *
               FROM books;`,
     getBook = `SELECT *

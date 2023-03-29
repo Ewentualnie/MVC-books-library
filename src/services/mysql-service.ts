@@ -2,6 +2,10 @@ import database from "../utils/db-connection";
 import query from "../utils/db-queries";
 import {Book} from "../models/types";
 
+export async function findLength(): Promise<number> {
+    return (await database.query(query.getLength))[0][0]['COUNT(*)']
+}
+
 export async function findAll(): Promise<[Book]> {
     return (await database.query(query.getAll))[0]
 }
