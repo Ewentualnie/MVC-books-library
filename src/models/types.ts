@@ -12,5 +12,7 @@ export type Book = {
     year: number;
     name: string;
     description: string;
-    authors: [string]
+    author: string;
+    preview: string;
+    title: string;
 }
