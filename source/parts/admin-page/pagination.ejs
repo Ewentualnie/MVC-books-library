@@ -1,0 +1,45 @@
+<div style="display: flex; justify-content: center; margin-right: 400px; font-size: 14px">
+    <ul class="pagination">
+        <li>
+            <% if (prev) { %>
+                <a href="http://localhost:3000/admin/?page=<%= page - 1 %>"><</a>
+            <% } else { %>
+                <a>&nbsp;&nbsp;</a>
+            <% } %>
+        </li>
+        <%
+        let start, end;
+        if (page < 3) {
+            start = 0;
+            end = buttonCount
+        } else if (page > pageCount - 3) {
+            start = pageCount - buttonCount;
+            end = pageCount
+        } else {
+            start = page - 2;
+            end = start + buttonCount
+        }
+        %>
+
+
+        <% for (let i = start; i < end; i++) { %>
+            <% if (i === page) { %>
+                <li>
+                    <a class="page-link" style="color:red; background-color: #efefef"><%= i + 1 %></a>
+                </li>
+            <% } else { %>
+                <li>
+                    <a href="http://localhost:3000/admin/?page=<%= i %>"><%= i + 1 %></a>
+                </li>
+            <% } %>
+        <% } %>
+
+        <li>
+            <% if (next) { %>
+                <a href="http://localhost:3000/admin/?page=<%= page + 1 %>">></a>
+            <% } else { %>
+                <a>&nbsp;&nbsp;</a>
+            <% } %>
+        </li>
+    </ul>
+</div>
