@@ -3,7 +3,7 @@ import {findAll, findById, findByLimitAndCounter} from "../services/mysql-servic
 import {Book} from "../models/types";
 
 export async function getAll(req: Request, res: Response) {
-    const limit: number = +(process.env.limit || 5);
+    const limit: number = +(process.env.limit || 12);
     const counter: number = +(req.query.counter || 0);
     const length: number = (await findAll()).length;
     const books: [Book] = await findByLimitAndCounter(limit, counter)
