@@ -5,20 +5,35 @@ import {Book} from "../models/types";
 import {IncomingForm} from "formidable";
 
 export async function getAll(req: Request, res: Response) {
-    const middlePage: number = 2;
-    const limit: number = +(process.env.adminLimit || 5);
+    const buttonCount: number = Math.abs(+(process.env.buttonCount || 5));
+    const middlePage: number = Math.ceil(buttonCount / 2);
+    const limit: number = Math.abs(+(process.env.adminLimitPerPage || 5));
     const page: number = +(req.query.page || 0);
     const length: number = await findLength();
     const pageCount: number = Math.ceil(length / limit);
-    const buttonCount: number = 5;
     const books: [Book] = await findByLimitAndCounter(limit, page * limit)
+
+    let start = 0, end = buttonCount;
+    if (pageCount > buttonCount) {
+        if (page < middlePage) {
+            start = 0;
+        } else if (page > pageCount - middlePage) {
+            start = pageCount - buttonCount;
+            end = pageCount
+        } else {
+            start = page - middlePage + 1;
+            end = start + buttonCount;
+        }
+    } else {
+        end = pageCount
+    }
     res.render('admin', {
         books,
-        pageCount,
-        prev: page >= middlePage,
-        next: page <= pageCount - middlePage - 1,
+        prev: page >= middlePage && pageCount > buttonCount,
+        next: page <= pageCount - middlePage - 1 && pageCount > buttonCount,
         page,
-        buttonCount
+        start,
+        end
     })
 }
 
