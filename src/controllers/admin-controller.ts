@@ -1,8 +1,9 @@
 import {Request, Response} from "express";
 import fs from "fs";
-import {findByLimitAndCounter, findLength} from "../services/mysql-service";
+import {findByLimitAndCounter, findLength, save} from "../services/mysql-service";
 import {Book} from "../models/types";
-import {IncomingForm} from "formidable";
+import {UploadedFile} from 'express-fileupload'
+import {source} from "../index";
 
 export async function getAll(req: Request, res: Response) {
     const buttonCount: number = Math.abs(+(process.env.buttonCount || 5));
@@ -13,7 +14,7 @@ export async function getAll(req: Request, res: Response) {
     const pageCount: number = Math.ceil(length / limit);
     const books: [Book] = await findByLimitAndCounter(limit, page * limit)
 
-    let start = 0, end = buttonCount;
+    let start: number = 0, end: number = buttonCount;
     if (pageCount > buttonCount) {
         if (page < middlePage) {
             start = 0;
@@ -38,21 +39,27 @@ export async function getAll(req: Request, res: Response) {
 }
 
 export async function addBook(req: Request, res: Response) {
-    const form = new IncomingForm();
-    form.parse(req, function (err, fields, files) {
+    if (req.files && !Array.isArray(req.files.preview)) {
+        const preview: UploadedFile = req.files.preview;
+        const path = source + '/books-page_files/' + preview.name
         const book: Book = {
-            name: req.body.name,
-            year: req.body.year,
             author: req.body.author1,
-            preview: req.body.preview,
             description: req.body.description,
-            title: req.body.author2
-        };
-        console.log(book)
-        console.log(files.preview)
-    });
-    // console.log(await save(book))
-    res.redirect('..')
+            name: req.body.name,
+            preview: preview.name,
+            title: req.body.name,
+            year: req.body.year
+        }
+        preview.mv(source + '/books-page_files/' + preview.name, (err) => {
+            if (err) {
+                res.status(400).end(JSON.stringify({error: "can't add this preview image"}))
+            }
+        })
+        console.log(await save(book));
+        res.redirect('..')
+    } else {
+        res.status(400).end(JSON.stringify({error: "can't add this book"}))
+    }
 }
 
 export function deleteBook(req: Request, res: Response) {

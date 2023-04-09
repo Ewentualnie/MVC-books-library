@@ -15,16 +15,15 @@ export async function findByLimitAndCounter(limit: number, counter: number): Pro
 }
 
 export async function findById(id: number): Promise<Book> {
-    return (await database.query(query.getBook, [id]))[0][0]
+    return (await database.query(query.getBookById, [id]))[0][0]
 }
 
 export async function save(book: Book) {
-    try {
+    const storedBook = (await database.query(query.getBookByName, [book.name]))[0][0]
+    console.log(storedBook)
+    if (!storedBook) {
         return await database.query(
             query.addBook,
-            [book.name, book.year, book.author, book.description, book.preview, book.title]
-        )
-    } catch (e) {
-        console.log(e)
+            [book.name, book.year, book.author, book.description, book.preview, book.title])
     }
 }
