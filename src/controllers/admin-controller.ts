@@ -50,7 +50,7 @@ export async function addBook(req: Request, res: Response) {
             title: req.body.name,
             year: req.body.year
         }
-        preview.mv(source + '/books-page_files/' + preview.name, (err) => {
+        preview.mv(path, (err) => {
             if (err) {
                 res.status(400).end(JSON.stringify({error: "can't add this preview image"}))
             }
