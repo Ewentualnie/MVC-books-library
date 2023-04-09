@@ -3,9 +3,12 @@ enum query {
                  FROM books`,
     getAll = `SELECT *
               FROM books;`,
-    getBook = `SELECT *
-               FROM books
-               WHERE ID = ?`,
+    getBookById = `SELECT *
+                   FROM books
+                   WHERE ID = ?`,
+    getBookByName = `SELECT *
+                   FROM books
+                   WHERE name = ?`,
     getWithLimit = `SELECT *
                     FROM books
                     LIMIT ?, ?;`,
