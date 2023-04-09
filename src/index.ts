@@ -1,12 +1,12 @@
-import express from 'express';
+import express, {Express} from 'express';
 import morgan from 'morgan';
 import path from 'path'
 import booksRouter from "./routers/books-router";
 import adminRouter from "./routers/admin-router"
 import bodyParser from 'body-parser'
 
-const app = express();
-const source = path.resolve(__dirname, '../source')
+const app: Express = express();
+export const source: string = path.resolve(__dirname, '../source')
 const port: number = 3000;
 
 app.set('view engine', 'ejs')
