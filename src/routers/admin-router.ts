@@ -7,7 +7,7 @@ const adminRouter = express.Router();
 
 adminRouter.get('/', getAll)
 adminRouter.post('/api/v1',fileUpload({createParentPath: true}), addBook)
-adminRouter.delete('/api/v1', deleteBook)
+adminRouter.delete('/api/v1/:id', deleteBook)
 adminRouter.get('/front', getFront)
 
 export default adminRouter;
