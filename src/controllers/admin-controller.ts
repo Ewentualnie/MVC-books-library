@@ -58,12 +58,12 @@ export async function addBook(req: Request, res: Response) {
         console.log(await save(book));
         res.redirect('..')
     } else {
-        res.status(400).end(JSON.stringify({error: "can't add this book"}))
+        res.status(400).end(JSON.stringify({error: "can't add book without preview image"}))
     }
 }
 
 export function deleteBook(req: Request, res: Response) {
-
+    console.log(+req.params.id)
 }
 
 export function getFront(req: Request, res: Response) {
