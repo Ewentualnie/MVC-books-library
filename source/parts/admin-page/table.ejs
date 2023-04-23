@@ -6,7 +6,8 @@
             <th style="text-align: center; width:50%">Назва книги</th>
             <th style="text-align: center; width:20%">Автори</th>
             <th style="text-align: center; width:5%">Рік</th>
-            <th style="text-align: center; width:15%">Дія</th>
+            <th style="text-align: center; width:5%">Сторінок</th>
+            <th style="text-align: center; width:10%">Дія</th>
             <th style="text-align: center; width:5%">Кліків</th>
         </tr>
         </thead>
@@ -18,6 +19,7 @@
                     <td style="text-align: center;"><%= book.name %></td>
                     <td style="text-align: center;"><%= book.author %></td>
                     <td style="text-align: center;"><%= book.year %></td>
+                    <td style="text-align: center;"><%= book.pages %></td>
                     <td style="text-align: center;"><a href="#" onclick="deleteBook('<%= book.id %>')">Видалити</a></td>
                     <td style="text-align: center;"><%= book.clickCount %></td>
                 </tr>
