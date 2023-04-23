@@ -1,28 +1,28 @@
 import {Request, Response} from "express";
 import fs from "fs";
-import {findByLimitAndCounter, findLength, save} from "../services/mysql-service";
+import {deleteById, findByLimitAndCounter, findLength, saveBook} from "../services/mysql-service";
 import {Book} from "../models/types";
 import {UploadedFile} from 'express-fileupload'
 import {source} from "../index";
 
-export async function getAll(req: Request, res: Response) {
+export async function getAll(req: Request, res: Response): Promise<void> {
     const buttonCount: number = Math.abs(+(process.env.buttonCount || 5));
     const middlePage: number = Math.ceil(buttonCount / 2);
-    const limit: number = Math.abs(+(process.env.adminLimitPerPage || 5));
-    const page: number = +(req.query.page || 0);
-    const length: number = await findLength();
-    const pageCount: number = Math.ceil(length / limit);
-    const books: [Book] = await findByLimitAndCounter(limit, page * limit)
+    const limitPerPage: number = Math.abs(+(process.env.adminLimitPerPage || 6));
+    const pageNumber: number = +(req.query.page || 0);
+    const dataBaseLength: number = await findLength();
+    const pageCount: number = Math.ceil(dataBaseLength / limitPerPage);
+    const books: [Book] = await findByLimitAndCounter(limitPerPage, pageNumber * limitPerPage)
 
     let start: number = 0, end: number = buttonCount;
     if (pageCount > buttonCount) {
-        if (page < middlePage) {
+        if (pageNumber < middlePage) {
             start = 0;
-        } else if (page > pageCount - middlePage) {
+        } else if (pageNumber > pageCount - middlePage) {
             start = pageCount - buttonCount;
             end = pageCount
         } else {
-            start = page - middlePage + 1;
+            start = pageNumber - middlePage + 1;
             end = start + buttonCount;
         }
     } else {
@@ -30,42 +30,52 @@ export async function getAll(req: Request, res: Response) {
     }
     res.render('admin', {
         books,
-        prev: page >= middlePage && pageCount > buttonCount,
-        next: page <= pageCount - middlePage - 1 && pageCount > buttonCount,
-        page,
+        prev: pageNumber >= middlePage && pageCount > buttonCount,
+        next: pageNumber <= pageCount - middlePage - 1 && pageCount > buttonCount,
+        page: pageNumber,
         start,
         end
     })
 }
 
-export async function addBook(req: Request, res: Response) {
+export async function addBook(req: Request, res: Response): Promise<void> {
     if (req.files && !Array.isArray(req.files.preview)) {
         const preview: UploadedFile = req.files.preview;
-        const path = source + '/books-page_files/' + preview.name
-        const book: Book = {
-            author: req.body.author1,
-            description: req.body.description,
-            name: req.body.name,
-            preview: preview.name,
-            title: req.body.name,
-            year: req.body.year
-        }
+        const path: string = source + '/books-page_files/' + preview.name;
         preview.mv(path, (err) => {
             if (err) {
-                res.status(400).end(JSON.stringify({error: "can't add this preview image"}))
+                res.status(400).end(JSON.stringify({error: "can't add this preview image"}));
             }
         })
-        console.log(await save(book));
-        res.redirect('..')
+        if (await saveBook(createBook(req.body))) {
+            res.redirect('..');
+        } else {
+            res.status(400).end(JSON.stringify({error: "can't add this book"}));
+        }
     } else {
-        res.status(400).end(JSON.stringify({error: "can't add book without preview image"}))
+        res.status(400).end(JSON.stringify({error: "can't add book without preview image"}));
     }
 }
 
-export function deleteBook(req: Request, res: Response) {
-    console.log(+req.params.id)
+export async function deleteBook(req: Request, res: Response) {
+    if (await deleteById(+req.params.id)) {
+        res.send(JSON.stringify({ok: true}));
+    } else {
+        res.status(400).end(JSON.stringify({error: "can't delete book with id: " + req.params.id}));
+    }
 }
 
 export function getFront(req: Request, res: Response) {
     fs.readFile('./dist/front/admin.js', 'utf-8', (err, data) => res.send(data))
+}
+
+function createBook(fields: Request["body"]): Book {
+    return {
+        author: fields.author1,
+        description: fields.description,
+        name: fields.name,
+        preview: fields.name,
+        title: fields.name,
+        year: fields.year
+    };
 }
