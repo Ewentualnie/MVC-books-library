@@ -21,17 +21,24 @@
         <br/>
         <div class="row" style="margin: 10px 3px 0 5px">
             <div class="col-xs-6">
-                <input name="preview" type="file" class="file-input-new">
+                <input name="pages" type="text" class="form-control" placeholder="Кількість сторінок">
             </div>
             <div class="col-xs-6">
                 <input name="author3" type="text" class="form-control" placeholder="Автор книги">
             </div>
         </div>
         <br/>
+        <div class="row" style="margin: 10px 3px 0 5px">
+            <div class="col-xs-6">
+                <input name="preview" type="file" class="file-input-new">
+            </div>
+        </div>
+        <br/>
         <div class="row" style="margin: 10px 3px 10px 5px">
             <div class="col-xs-6">
                 <div style="flex: content; text-align: center;">
-                    <input onclick="validateBook(this.form, event)" type="submit" class="btn btn-success" value="Додати книгу">
+                    <input onclick="validateBook(this.form, event)" type="submit" class="btn btn-success"
+                           value="Додати книгу">
                 </div>
             </div>
             <div class="col-xs-6">
