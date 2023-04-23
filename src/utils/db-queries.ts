@@ -7,7 +7,7 @@ enum query {
               WHERE isDeleted = 0;`,
     getBookById = `SELECT *
                    FROM books
-                   WHERE ID = ? & isDeleted = 0`,
+                   WHERE ID = ?`,
     getBookByName = `SELECT *
                      FROM books
                      WHERE name = ? & isDeleted = 0`,
