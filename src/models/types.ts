@@ -15,4 +15,5 @@ export type Book = {
     author: string;
     preview: string;
     title: string;
+    pages: string;
 }
