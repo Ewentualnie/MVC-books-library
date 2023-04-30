@@ -76,6 +76,7 @@ function createBook(fields: Request["body"]): Book {
         name: fields.name,
         preview: fields.name,
         title: fields.name,
-        year: fields.year
+        year: fields.year,
+        pages: fields.pages
     };
 }
