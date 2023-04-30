@@ -44,7 +44,7 @@
                             </div>
                             <div class="bookRow">
                                 <span class="properties">сторінок:</span>
-                                <span id="pages">351</span>
+                                <span id="pages"><%= book.pages %></span>
                             </div>
                             <div class="bookRow">
                                 <span class="properties">isbn:</span>
@@ -61,12 +61,11 @@
                     </div>
                 </div>
             </div>
-            <script src="http://localhost:3000/book-page_files/book.js" defer=""></script>
         </div>
     </div>
 </section>
 <%- include('./parts/footer') %>
 <%- include('./parts/somethings') %>
+<script src="/front"></script>
 </body>
-
 </html>
