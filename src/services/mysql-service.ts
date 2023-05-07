@@ -6,10 +6,6 @@ export async function findLength(): Promise<number> {
     return (await database.query(query.getLength))[0][0]['COUNT(*)'];
 }
 
-export async function findAll(): Promise<[Book]> {
-    return (await database.query(query.getAll))[0];
-}
-
 export async function findByLimitAndCounter(limit: number, counter: number): Promise<[Book]> {
     return (await database.query(query.getWithLimit, [counter, limit]))[0];
 }
