@@ -5,15 +5,22 @@ enum query {
     getAll = `SELECT *
               FROM books
               WHERE isDeleted = 0;`,
-    getBookById = `SELECT *
+    getBookById = `SELECT books.*, GROUP_CONCAT(authors.name SEPARATOR ', ') as authors
                    FROM books
-                   WHERE ID = ? AND isDeleted = 0`,
+                            JOIN pairs ON books.id = pairs.book_id
+                            JOIN authors ON authors.id = pairs.author_id
+                   WHERE books.id = ?
+                     AND isDeleted = 0;`,
     getBookByName = `SELECT *
                      FROM books
-                     WHERE name = ? AND isDeleted = 0`,
-    getWithLimit = `SELECT *
+                     WHERE name = ?
+                       AND isDeleted = 0`,
+    getWithLimit = `SELECT books.*, GROUP_CONCAT(authors.name SEPARATOR ', ') as authors
                     FROM books
+                             JOIN pairs ON books.id = pairs.book_id
+                             JOIN authors ON authors.id = pairs.author_id
                     WHERE isDeleted = 0
+                    GROUP BY books.id
                     LIMIT ?, ?;`,
     addBook = `INSERT INTO books (name, year, author, description, preview, title, pages, isDeleted)
                VALUES (?, ?, ?, ?, ?, ?, ?, 0);`,
