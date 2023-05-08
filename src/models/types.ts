@@ -5,4 +5,5 @@ export type Book = {
     preview: string;
     title: string;
     pages: string;
+    authors: string
 }
