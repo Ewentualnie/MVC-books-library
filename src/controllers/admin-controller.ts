@@ -4,6 +4,7 @@ import {deleteById, findByLimitAndCounter, findLength, saveBook} from "../servic
 import {Book} from "../models/types";
 import {UploadedFile} from 'express-fileupload'
 import {source} from "../index";
+import {createBook, createPairsAndAuthors} from "../services/book-service";
 
 export async function getAll(req: Request, res: Response): Promise<void> {
     const buttonCount: number = Math.abs(+(process.env.buttonCount || 5));
@@ -20,13 +21,13 @@ export async function getAll(req: Request, res: Response): Promise<void> {
             start = 0;
         } else if (pageNumber > pageCount - middlePage) {
             start = pageCount - buttonCount;
-            end = pageCount
+            end = pageCount;
         } else {
             start = pageNumber - middlePage + 1;
             end = start + buttonCount;
         }
     } else {
-        end = pageCount
+        end = pageCount;
     }
     res.render('admin', {
         books,
@@ -47,7 +48,9 @@ export async function addBook(req: Request, res: Response): Promise<void> {
                 res.status(400).end(JSON.stringify({error: "can't add this preview image"}));
             }
         })
-        if (await saveBook(createBook(req.body))) {
+        const bookId: number | undefined = await saveBook(createBook(req.body, preview.name));
+        if (bookId) {
+            await createPairsAndAuthors(req.body, bookId);
             res.redirect('..');
         } else {
             res.status(400).end(JSON.stringify({error: "can't add this book"}));
@@ -67,16 +70,4 @@ export async function deleteBook(req: Request, res: Response) {
 
 export function getFront(req: Request, res: Response) {
     fs.readFile('./dist/front/admin.js', 'utf-8', (err, data) => res.send(data))
-}
-
-function createBook(fields: Request["body"]): Book {
-    return {
-        author: fields.author1,
-        description: fields.description,
-        name: fields.name,
-        preview: fields.name,
-        title: fields.name,
-        year: fields.year,
-        pages: fields.pages
-    };
 }
