@@ -22,11 +22,18 @@ enum query {
                     WHERE isDeleted = 0
                     GROUP BY books.id
                     LIMIT ?, ?;`,
-    addBook = `INSERT INTO books (name, year, author, description, preview, title, pages, isDeleted)
-               VALUES (?, ?, ?, ?, ?, ?, ?, 0);`,
+    addBook = `INSERT INTO books (name, year, description, preview, title, pages, isDeleted)
+               VALUES (?, ?, ?, ?, ?, ?, 0);`,
     deleteBook = `UPDATE books
                   SET isDeleted = 1
-                  WHERE id = ?;`
+                  WHERE id = ?;`,
+    saveAuthor = `INSERT INTO authors (name)
+                      VALUE (?);`,
+    savePair = `INSERT INTO pairs (book_id, author_id)
+                    VALUE (?, ?);`,
+    getAuthorByName = `SELECT id
+                     FROM authors
+                     WHERE name = ?;`,
 }
 
 export default query;
