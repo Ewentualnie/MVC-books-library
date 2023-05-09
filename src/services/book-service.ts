@@ -1,8 +1,8 @@
 import {Request} from "express";
-import {Book} from "../models/types";
+import {newBook} from "../models/types";
 import {saveAuthor, savePair} from "./mysql-service";
 
-export function createBook(fields: Request["body"], preview: string): Book {
+export function createBook(fields: Request["body"], preview: string): newBook {
     return {
         description: fields.description,
         name: fields.name,

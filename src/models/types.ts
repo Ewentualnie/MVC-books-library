@@ -7,3 +7,12 @@ export type Book = {
     pages: string;
     authors: string
 }
+
+export type newBook ={
+    year: number;
+    name: string;
+    description: string;
+    preview: string;
+    title: string;
+    pages: string;
+}
