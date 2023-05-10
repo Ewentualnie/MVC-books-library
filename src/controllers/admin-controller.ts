@@ -42,7 +42,7 @@ export async function getAll(req: Request, res: Response): Promise<void> {
 export async function addBook(req: Request, res: Response): Promise<void> {
     if (req.files && !Array.isArray(req.files.preview)) {
         const preview: UploadedFile = req.files.preview;
-        const path: string = source + '/books-page_files/' + preview.name;
+        const path: string = source + '/images/' + preview.name;
         preview.mv(path, (err) => {
                 if (err) res.status(400).end(JSON.stringify({error: "can't add this preview image"}));
             }
