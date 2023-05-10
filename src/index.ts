@@ -1,8 +1,8 @@
 import express, {Express} from 'express';
 import morgan from 'morgan';
-import path from 'path'
+import path from 'path';
 import booksRouter from "./routers/books-router";
-import adminRouter from "./routers/admin-router"
+import adminRouter from "./routers/admin-router";
 
 const app: Express = express();
 export const source: string = path.resolve(__dirname, '../source');
