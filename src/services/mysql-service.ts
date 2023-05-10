@@ -38,3 +38,11 @@ export async function saveAuthor(author: string): Promise<number> {
 export async function savePair(bookId: number, authorId: number): Promise<void> {
     await database.query(query.savePair, [bookId, authorId])
 }
+
+export async function addViews(id: number): Promise<void> {
+    await database.query(query.increaseView, [id])
+}
+
+export async function addClickCount(id: number): Promise<number> {
+    return (await database.query(query.increaseClickCount, [id]))[0].changedRows
+}

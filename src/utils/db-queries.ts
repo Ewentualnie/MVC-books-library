@@ -34,6 +34,12 @@ enum query {
     getAuthorByName = `SELECT id
                      FROM authors
                      WHERE name = ?;`,
+    increaseView =`UPDATE books
+                   SET views = views + 1
+                   WHERE id = ?;`,
+    increaseClickCount =`UPDATE books
+                   SET clickCount = books.clickCount + 1
+                   WHERE id = ?;`,
 }
 
 export default query;

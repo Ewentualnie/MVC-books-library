@@ -1,8 +1,8 @@
 import {Request, Response} from "express";
-import {findById, findByLimitAndCounter, findLength} from "../services/mysql-service";
+import {findById, findByLimitAndCounter, findLength, addViews} from "../services/mysql-service";
 import {Book} from "../models/types";
 
-export async function getAll(req: Request, res: Response) {
+export async function getAll(req: Request, res: Response): Promise<void> {
     const limit: number = +(process.env.limit || 12);
     const counter: number = +(req.query.counter || 0);
     const length: number = await findLength();
@@ -16,8 +16,7 @@ export async function getAll(req: Request, res: Response) {
     })
 }
 
-export async function getBook(req: Request, res: Response) {
-    res.render('book', {
-        book: await findById(+req.params.id)
-    })
+export async function getBook(req: Request, res: Response): Promise<void> {
+    const book: Book = await findById(+req.params.id)
+    addViews(book.id).then(() => res.render('book', {book}))
 }
