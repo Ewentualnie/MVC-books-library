@@ -1,4 +1,5 @@
 export type Book = {
+    id: number;
     year: number;
     name: string;
     description: string;
@@ -8,7 +9,7 @@ export type Book = {
     authors: string
 }
 
-export type newBook ={
+export type newBook = {
     year: number;
     name: string;
     description: string;

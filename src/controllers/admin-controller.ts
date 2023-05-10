@@ -44,10 +44,9 @@ export async function addBook(req: Request, res: Response): Promise<void> {
         const preview: UploadedFile = req.files.preview;
         const path: string = source + '/books-page_files/' + preview.name;
         preview.mv(path, (err) => {
-            if (err) {
-                res.status(400).end(JSON.stringify({error: "can't add this preview image"}));
+                if (err) res.status(400).end(JSON.stringify({error: "can't add this preview image"}));
             }
-        })
+        )
         const bookId: number | undefined = await saveBook(createBook(req.body, preview.name));
         if (bookId) {
             await createPairsAndAuthors(req.body, bookId);
@@ -60,7 +59,7 @@ export async function addBook(req: Request, res: Response): Promise<void> {
     }
 }
 
-export async function deleteBook(req: Request, res: Response) {
+export async function deleteBook(req: Request, res: Response): Promise<void> {
     if (await deleteById(+req.params.id)) {
         res.send(JSON.stringify({ok: true}));
     } else {
