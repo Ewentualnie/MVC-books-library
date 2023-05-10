@@ -24,22 +24,31 @@ enum query {
                     LIMIT ?, ?;`,
     addBook = `INSERT INTO books (name, year, description, preview, title, pages, isDeleted, clickCount, views)
                VALUES (?, ?, ?, ?, ?, ?, 0, 0, 0);`,
-    deleteBook = `UPDATE books
-                  SET isDeleted = 1
-                  WHERE id = ?;`,
+    softDeleteBook = `UPDATE books
+                      SET isDeleted = 1
+                      WHERE id = ?;`,
     saveAuthor = `INSERT INTO authors (name)
                       VALUE (?);`,
     savePair = `INSERT INTO pairs (book_id, author_id)
                     VALUE (?, ?);`,
     getAuthorByName = `SELECT id
-                     FROM authors
-                     WHERE name = ?;`,
-    increaseView =`UPDATE books
-                   SET views = views + 1
-                   WHERE id = ?;`,
-    increaseClickCount =`UPDATE books
-                   SET clickCount = books.clickCount + 1
-                   WHERE id = ?;`,
+                       FROM authors
+                       WHERE name = ?;`,
+    increaseView = `UPDATE books
+                    SET views = views + 1
+                    WHERE id = ?;`,
+    increaseClickCount = `UPDATE books
+                          SET clickCount = books.clickCount + 1
+                          WHERE id = ?;`,
+    deletePair = `DELETE
+                  FROM pairs
+                  WHERE book_id = ?;`,
+    hardDeleteBooks = `DELETE
+                       FROM books
+                       WHERE isDeleted = 1;`,
+    getMarkedBooks = `SELECT id
+                      FROM books
+                      WHERE isDeleted = 1;`
 }
 
 export default query;
