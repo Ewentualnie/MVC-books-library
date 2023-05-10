@@ -6,14 +6,18 @@ export type Book = {
     preview: string;
     title: string;
     pages: string;
-    authors: string
+    authors: string;
 }
 
-export type newBook = {
+export type NewBook = {
     year: number;
     name: string;
     description: string;
     preview: string;
     title: string;
     pages: string;
+}
+
+export type MarkedBook = {
+    id: number;
 }
