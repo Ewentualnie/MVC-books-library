@@ -1,9 +1,14 @@
 function validateBook(
     dataBook: {
         name: { value: string; };
-        year: { value: string | number; };
+        year: { value: number; };
+        pages: { value: number; };
     }, e: Event): void {
-    if (!dataBook.name.value || isNaN(+dataBook.year.value) || +dataBook.year.value == 0) {
+    if (!dataBook.name.value
+        || +dataBook.year.value == 0
+        || +dataBook.year.value < 0
+        || +dataBook.pages.value == 0
+        || +dataBook.pages.value < 0) {
         e.preventDefault();
     }
 }

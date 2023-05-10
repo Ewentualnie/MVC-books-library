@@ -22,8 +22,8 @@ enum query {
                     WHERE isDeleted = 0
                     GROUP BY books.id
                     LIMIT ?, ?;`,
-    addBook = `INSERT INTO books (name, year, description, preview, title, pages, isDeleted)
-               VALUES (?, ?, ?, ?, ?, ?, 0);`,
+    addBook = `INSERT INTO books (name, year, description, preview, title, pages, isDeleted, clickCount, views)
+               VALUES (?, ?, ?, ?, ?, ?, 0, 0, 0);`,
     deleteBook = `UPDATE books
                   SET isDeleted = 1
                   WHERE id = ?;`,
