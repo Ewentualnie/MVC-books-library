@@ -1,9 +1,6 @@
 import mysql from "mysql2";
+import connection from "../models/connection";
 
-const database = mysql.createPool({
-    user: 'admin',
-    password: 'root',
-    database: 'library'
-}).promise();
+const database = mysql.createPool(connection).promise();
 
 export default database;
