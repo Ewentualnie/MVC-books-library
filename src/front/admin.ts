@@ -22,3 +22,11 @@ function deleteBook(id: number): void {
         }
     })
 }
+
+function logout() {
+    fetch('/admin', {
+        method: 'GET',
+        headers: {'Authorization': 'Basic'}
+    }).then()
+    window.location.replace('/')
+}
