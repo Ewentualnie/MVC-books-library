@@ -1,3 +1,5 @@
+import {ScheduledTask} from "node-cron";
+
 export type Book = {
     id: number;
     year: number;
@@ -20,4 +22,15 @@ export type NewBook = {
 
 export type MarkedBook = {
     id: number;
+}
+export type Connect = {
+    host: string;
+    user: string;
+    password: string;
+    database: string;
+}
+
+export type Schedule = {
+    scheduleBackup: () => ScheduledTask;
+    scheduleDelete: () => ScheduledTask;
 }
