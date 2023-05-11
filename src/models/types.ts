@@ -34,3 +34,8 @@ export type Schedule = {
     scheduleBackup: () => ScheduledTask;
     scheduleDelete: () => ScheduledTask;
 }
+
+export type Admin = {
+    name: string;
+    pass: string;
+}
