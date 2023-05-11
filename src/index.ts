@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import path from 'path';
 import booksRouter from "./routers/books-router";
 import adminRouter from "./routers/admin-router";
+import runCron from "./utils/cron-setup";
 
 const app: Express = express();
 export const source: string = path.resolve(__dirname, '../source');
@@ -16,5 +17,8 @@ app.use(express.static(source));
 app.use(morgan('common'));
 app.use(booksRouter);
 app.use("/admin", adminRouter);
+
+runCron.scheduleBackup()
+runCron.scheduleDelete()
 
 app.listen(port, () => console.log("app listen on port " + port))
