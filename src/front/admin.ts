@@ -23,10 +23,9 @@ function deleteBook(id: number): void {
     })
 }
 
-function logout() {
+function logout(): void {
     fetch('/admin', {
         method: 'GET',
         headers: {'Authorization': 'Basic'}
     }).then()
-    window.location.replace('/')
 }
