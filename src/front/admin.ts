@@ -14,13 +14,15 @@ function validateBook(
 }
 
 function deleteBook(id: number): void {
-    fetch('./api/v1/' + id, {
-        method: "DELETE"
-    }).then((res: Response) => {
-        if (res.ok) {
-            window.location.reload();
-        }
-    })
+    if (confirm('Видалити цю книгу?')){
+        fetch('./api/v1/' + id, {
+            method: "DELETE"
+        }).then((res: Response) => {
+            if (res.ok) {
+                window.location.reload();
+            }
+        })
+    }
 }
 
 function logout(): void {
