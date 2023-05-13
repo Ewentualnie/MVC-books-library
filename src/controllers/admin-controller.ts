@@ -13,7 +13,7 @@ export async function getAll(req: Request, res: Response): Promise<void> {
     const pageNumber: number = +(req.query.page || 0);
     const dataBaseLength: number = await findLength();
     const pageCount: number = Math.ceil(dataBaseLength / limitPerPage);
-    const books: [Book] = await findByLimitAndCounter(limitPerPage, pageNumber * limitPerPage)
+    const books: Book[] = await findByLimitAndCounter(limitPerPage, pageNumber * limitPerPage)
 
     let start: number = 0, end: number = buttonCount;
     if (pageCount > buttonCount) {
