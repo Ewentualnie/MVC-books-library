@@ -21,5 +21,9 @@ export async function getAll(req: Request, res: Response): Promise<void> {
 
 export async function getBook(req: Request, res: Response): Promise<void> {
     const book: Book = await findById(+req.params.id)
-    addViews(book.id).then(() => res.render('book', {book}))
+    if (book) {
+        addViews(book.id).then(() => res.render('book', {book}))
+    } else {
+        res.status(500).end(JSON.stringify({error: `book with id "${req.params.id}" not found`}))
+    }
 }
