@@ -6,7 +6,7 @@ export async function findLength(): Promise<number> {
     return (await database.query(query.getLength))[0][0]['COUNT(*)'];
 }
 
-export async function findByLimitAndCounter(limit: number, counter: number): Promise<[Book]> {
+export async function findByLimitAndCounter(limit: number, counter: number): Promise<Book[]> {
     return (await database.query(query.getWithLimit, [counter, limit]))[0];
 }
 
@@ -57,4 +57,8 @@ export async function deletePair(bookId: number): Promise<void> {
 
 export async function hardDeleteBooks(): Promise<void> {
     await database.query(query.hardDeleteBooks);
+}
+
+export async function findByNameWithLimit(name: string): Promise<Book[]> {
+    return (await database.query(query.getBooksByPatternName, [name]))[0];
 }
