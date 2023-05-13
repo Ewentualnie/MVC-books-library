@@ -14,7 +14,7 @@ enum query {
     getBookByName = `SELECT *
                      FROM books
                      WHERE name = ?
-                       AND isDeleted = 0`,
+                       AND isDeleted = 0;`,
     getWithLimit = `SELECT books.*, GROUP_CONCAT(authors.name SEPARATOR ', ') as authors
                     FROM books
                              JOIN pairs ON books.id = pairs.book_id
@@ -48,7 +48,14 @@ enum query {
                        WHERE isDeleted = 1;`,
     getMarkedBooks = `SELECT id
                       FROM books
-                      WHERE isDeleted = 1;`
+                      WHERE isDeleted = 1;`,
+    getBooksByPatternName =`SELECT books.*, GROUP_CONCAT(authors.name SEPARATOR ', ') as authors
+                            FROM books
+                                     JOIN pairs ON books.id = pairs.book_id
+                                     JOIN authors ON authors.id = pairs.author_id
+                            WHERE isDeleted = 0
+                              AND books.name LIKE ?
+                            GROUP BY books.id;`,
 }
 
 export default query;
