@@ -20,10 +20,13 @@ export async function getAll(req: Request, res: Response): Promise<void> {
 }
 
 export async function getBook(req: Request, res: Response): Promise<void> {
-    const book: Book = await findById(+req.params.id)
-    if (book) {
-        addViews(book.id).then(() => res.render('book', {book}))
+    const bookId: number = +req.params.id
+    if (!isNaN(bookId)) {
+        const book: Book = await findById(bookId)
+        book.id ?
+            addViews(book.id).then(() => res.render('book', {book})) :
+            res.status(500).end(JSON.stringify({error: `book with id '${req.params.id}' not found`}));
     } else {
-        res.status(500).end(JSON.stringify({error: `book with id "${req.params.id}" not found`}))
+        res.status(500).end(JSON.stringify({error: `id '${req.params.id}' is not a number`}))
     }
 }
