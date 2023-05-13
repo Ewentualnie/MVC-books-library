@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import fs from "fs";
-import {deleteById, findByLimitAndCounter, findLength, saveBook} from "../services/mysql-service";
+import {deleteById, findById, findByLimitAndCounter, findLength, saveBook} from "../services/mysql-service";
 import {Book} from "../models/types";
 import {UploadedFile} from 'express-fileupload'
 import {source} from "../index";
@@ -60,8 +60,13 @@ export async function addBook(req: Request, res: Response): Promise<void> {
 }
 
 export async function deleteBook(req: Request, res: Response): Promise<void> {
-    if (await deleteById(+req.params.id)) {
-        res.send(JSON.stringify({ok: true}));
+    const book: Book = await findById(+req.params.id)
+    if (book) {
+        deleteById(book.id)
+            .then((): void => {
+                fs.unlinkSync(source + '/images/' + book.preview);
+                res.send(JSON.stringify({ok: true}));
+            });
     } else {
         res.status(400).end(JSON.stringify({error: "can't delete book with id: " + req.params.id}));
     }
