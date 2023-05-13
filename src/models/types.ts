@@ -31,8 +31,9 @@ export type Connect = {
 }
 
 export type Schedule = {
-    scheduleBackup: () => ScheduledTask;
-    scheduleDelete: () => ScheduledTask;
+    scheduleCreateBackup: () => ScheduledTask;
+    scheduleDeleteBooks: () => ScheduledTask;
+    scheduleRemoveBackups: ()=> ScheduledTask;
 }
 
 export type Admin = {

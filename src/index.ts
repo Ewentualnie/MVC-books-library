@@ -18,7 +18,8 @@ app.use(morgan('common'));
 app.use(booksRouter);
 app.use("/admin", adminRouter);
 
-runCron.scheduleBackup()
-runCron.scheduleDelete()
+runCron.scheduleCreateBackup();
+runCron.scheduleDeleteBooks();
+runCron.scheduleRemoveBackups();
 
 app.listen(port, () => console.log("app listen on port " + port))

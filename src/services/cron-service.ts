@@ -25,3 +25,8 @@ export function deleteMarkedBooks(): void {
         .then((markedBooks: MarkedBook[]) => Promise.all(markedBooks.map((book: MarkedBook) => deletePair(book.id)))
             .then(async (): Promise<void> => await hardDeleteBooks()));
 }
+
+export function removeBackups(): void {
+    const backupPath: string = process.env.backupPath || './dump/backups/';
+    fs.rmSync(backupPath, { recursive: true, force: true });
+}
