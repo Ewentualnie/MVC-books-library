@@ -21,12 +21,12 @@ export async function getAll(req: Request, res: Response): Promise<void> {
 
 export async function getBook(req: Request, res: Response): Promise<void> {
     const bookId: number = +req.params.id
-    if (!isNaN(bookId)) {
+    if (isNaN(bookId)) {
+        res.status(500).end(JSON.stringify({error: `id '${req.params.id}' is not a number`}))
+    } else {
         const book: Book = await findById(bookId)
         book.id ?
             addViews(book.id).then(() => res.render('book', {book})) :
             res.status(500).end(JSON.stringify({error: `book with id '${req.params.id}' not found`}));
-    } else {
-        res.status(500).end(JSON.stringify({error: `id '${req.params.id}' is not a number`}))
     }
 }
